@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* .pop-up {
+  display: none;
+}
+
+.pop-up .active {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 150px;
+  max-width: 150px;
+  background-color: red;
+  z-index: 9999999;
+} */
+
+.translate-btn {
+  background-color: white;
+  color: black;
+  padding: 2px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
