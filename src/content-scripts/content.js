@@ -72,8 +72,13 @@ const highlightNode = (node, text) => {
   popUp.id = "popUp";
   popUp.className = "pop-up";
   popUp.innerHTML = `
-    <p style="color:white; font-size:14px; font-weight:500;">${text}</p>
-    <button class="translate-btn">Translate</button>
+    <p style="color:white; font-size:14px; font-weight:500; 
+  cursor: pointer; text-align:center;  -webkit-line-clamp: 3;">${text}</p>
+    <button class="translate-btn" style="  background-color: white;
+  color: black;
+  padding: 2px 20px;
+  border-radius: 3px;
+  text-wrap: wrap;">Translate</button>
   `;
   popUp.style.display = "none";
   span.appendChild(popUp);

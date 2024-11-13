@@ -3,9 +3,9 @@
 @tailwind utilities;
 /* .pop-up {
   display: none;
-}
+} */
 
-.pop-up .active {
+/* .pop-up .active {
   position: absolute;
   top: 0;
   right: 0;
@@ -16,7 +16,7 @@
   max-width: 150px;
   background-color: red;
   z-index: 9999999;
-} */
+}
 
 .translate-btn {
   background-color: white;
@@ -24,4 +24,4 @@
   padding: 2px 20px;
   border-radius: 3px;
   cursor: pointer;
-}
+} */
