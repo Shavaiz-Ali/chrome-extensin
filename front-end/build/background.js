@@ -2,13 +2,34 @@
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Background script installed and running");
 
+  const fetchTranslations = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/transltions/get-translations`,
+        {
+          method: "GET",
+        }
+      );
+
+      const results = await response.json();
+      console.log(results);
+      if (results.status === 200) {
+        return results.translations[0].translations;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Load lang.json
-  const langJsonUrl = chrome.runtime.getURL("lang.json");
-  const response = await fetch(langJsonUrl);
-  const langJson = await response.json();
+  // const langJsonUrl = chrome.runtime.getURL("lang.json");
+  // const response = await fetch(langJsonUrl);
+  // const langJson = await response.json();
+  const translations = await fetchTranslations();
+  console.log(translations);
 
   // Save lang.json data into Chrome storage
-  chrome.storage.sync.set({ translations: langJson }, () => {
+  chrome.storage.sync.set({ translations: translations }, () => {
     console.log("Translations loaded and stored in Chrome storage.");
   });
 });
