@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
 // import { translateText } from "../services/translationService";
@@ -89,55 +90,50 @@ export const useTranslations = () => {
 
   const handleTranslate = async (text, targetLanguage) => {
     // alert(`Translating: ${text} to ${targetLanguage}`); // Fixed alert syntax
-    console.log("translating", text, targetLanguage);
-
-    try {
-      // if (translation) {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs[0]?.id) {
-          console.log("checking", chrome.tabs);
-          chrome.runtime.sendMessage(
-            {
-              action: "translateText",
-              text: text,
-              targetLanguage: targetLanguage,
-            },
-            (response) => {
-              if (chrome.runtime.lastError) {
-                console.error(
-                  "Error sending message:",
-                  chrome.runtime.lastError
-                );
-              } else {
-                alert("message sent successfully");
-                console.log("Message sent to background:", response);
-              }
-            }
-          );
-        }
-      });
-
-      // const updatedTranslations = {
-      //   ...translations,
-      //   [text]: translation,
-      // };
-
-      // await storage.set({ translations: updatedTranslations });
-      // setTranslations(updatedTranslations);
-
-      // setUntranslatedTexts((prev) =>
-      //   prev.filter((item) => item.text !== text)
-      // );
-
-      // // Make sure untranslatedTexts is defined before accessing length
-      // if (untranslatedTexts?.length !== undefined) {
-      //   updateProgress(untranslatedTexts.length - 1);
-      // }
-      // }
-    } catch (error) {
-      console.error("Translation failed:", error);
-      alert(`Translation failed: ${error.message}`); // Add user feedback
-    }
+    // console.log("translating", text, targetLanguage);
+    // try {
+    //   // if (translation) {
+    //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    //     if (tabs[0]?.id) {
+    //       console.log("checking", chrome.tabs);
+    //       chrome.runtime.sendMessage(
+    //         {
+    //           action: "translateText",
+    //           text: text,
+    //           targetLanguage: targetLanguage,
+    //         },
+    //         (response) => {
+    //           if (chrome.runtime.lastError) {
+    //             console.error(
+    //               "Error sending message:",
+    //               chrome.runtime.lastError
+    //             );
+    //           } else {
+    //             alert("message sent successfully");
+    //             console.log("Message sent to background:", response);
+    //           }
+    //         }
+    //       );
+    //     }
+    //   });
+    //   // const updatedTranslations = {
+    //   //   ...translations,
+    //   //   [text]: translation,
+    //   // };
+    //   // await storage.set({ translations: updatedTranslations });
+    //   // setTranslations(updatedTranslations);
+    //   // setUntranslatedTexts((prev) =>
+    //   //   prev.filter((item) => item.text !== text)
+    //   // );
+    //   // // Make sure untranslatedTexts is defined before accessing length
+    //   // if (untranslatedTexts?.length !== undefined) {
+    //   //   updateProgress(untranslatedTexts.length - 1);
+    //   // }
+    //   // }
+    // } catch (error) {
+    //   console.error("Translation failed:", error);
+    //   alert(`Translation failed: ${error.message}`); // Add user feedback
+    // }
   };
   return {
     translations,

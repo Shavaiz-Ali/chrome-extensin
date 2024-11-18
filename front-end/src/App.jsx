@@ -21,13 +21,13 @@ function App() {
       <h2 className="text-2xl font-bold text-blue-600 mb-6 text-center">
         Auto Translation Extension
       </h2>
-      {/* 
+
       <LanguageSelector
         value={targetLanguage}
         onChange={setTargetLanguage}
         languages={SUPPORTED_LANGUAGES}
       />
-
+      {/* 
       <ProgressBar translated={progress.translated} total={progress.total} /> */}
 
       <button

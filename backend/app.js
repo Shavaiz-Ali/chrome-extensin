@@ -5,6 +5,7 @@ import { connectDB } from "./config/index.js";
 import {
   createTranslation,
   getTranslations,
+  updateTranslations,
 } from "./controller/translation.controller.js";
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 // routes
 app.post("/api/transltions/create-translations", createTranslation);
 app.get("/api/transltions/get-translations", getTranslations);
+app.put("/api/transltions/update-translations/:id", updateTranslations);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
