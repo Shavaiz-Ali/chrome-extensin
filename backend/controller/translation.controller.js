@@ -2,42 +2,48 @@ import { Translation } from "../model/translation.model.js";
 
 export const createTranslation = async (req, res) => {
   try {
-    const translation = req.body;
-    console.log(translation);
-    if (!translation) {
-      return res.json({
+    const { language, translations } = req.body;
+
+    if (!language || !translations) {
+      return res.status(400).json({
         success: false,
-        message: "Translation data is required",
-        status: 400,
+        message: "Language and translations are required.",
       });
     }
 
-    const newTranslation = new Translation({
-      translations: translation,
-    });
-
-    await newTranslation.save();
-
-    if (!newTranslation) {
-      return {
-        success: false,
-        message: "Failed to create translation",
-        status: 500,
-      };
+    // Find or create a new translation document
+    let translationDoc = await Translation.findOne();
+    if (!translationDoc) {
+      translationDoc = new Translation();
     }
 
-    return res.json({
+    // Ensure the specific language map exists
+    if (!translationDoc.translations[language]) {
+      translationDoc.translations[language] = new Map();
+    }
+
+    // Merge new translations with existing ones for the specified language
+    const existingTranslations = new Map(translationDoc.translations[language]);
+    for (const [key, value] of Object.entries(translations)) {
+      existingTranslations.set(key, value);
+    }
+
+    // Set the merged translations back into the language-specific field
+    translationDoc.translations[language] = existingTranslations;
+
+    // Save the updated document
+    await translationDoc.save();
+
+    return res.status(201).json({
       success: true,
-      message: "Translation created successfully",
-      status: 201,
-      translation: newTranslation,
+      message: `Translations for ${language} updated successfully.`,
+      translation: translationDoc,
     });
   } catch (error) {
-    console.log(error);
-    return res.json({
+    console.error("Error creating/updating translation:", error);
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
-      status: 500,
       error: error.message,
     });
   }

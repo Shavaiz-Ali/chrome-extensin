@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
 // import { translateText } from "../services/translationService";
-import { storage } from "../utils/chrome";
+import { storage } from "../utils/chrome.js";
 
 export const useTranslations = () => {
   const [translations, setTranslations] = useState({});
@@ -38,7 +38,9 @@ export const useTranslations = () => {
     setProgress({ translated, total });
   };
 
-  const handleDetectUntranslated = async () => {
+  const handleDetectUntranslated = async (targetLanguage) => {
+    const language = targetLanguage.trim().toLowerCase().slice(0, 2);
+    console.log(language);
     const tabs = await chrome?.tabs?.query({
       active: true,
       currentWindow: true,
@@ -46,6 +48,7 @@ export const useTranslations = () => {
     if (tabs?.[0]?.id) {
       chrome?.tabs?.sendMessage(tabs[0].id, {
         action: "detectUntranslated",
+        language,
         translations,
       });
     }

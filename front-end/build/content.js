@@ -104,7 +104,7 @@ const highlightNode = (node, text) => {
     top: 50%;
     transform: translateY(-50%);
     right: 6px;
-    z-index: 99999999;
+    z-index: 999999999999 !important;
     padding: 0px 5px;
     cursor: pointer;
   `;
@@ -114,7 +114,7 @@ const highlightNode = (node, text) => {
   const popUp = document.createElement("div");
   popUp.className = "pop-up";
   popUp.innerHTML = `
-    <p style="color:white; font-size:14px; font-weight:500; text-align:center;">
+    <p style="color:white; font-size:14px !important; font-weight:500 !important; text-align:center;">
       ${text}
     </p>
     <input type="text" placeholder="Enter your translation" class="translation-input" style="
@@ -130,8 +130,8 @@ const highlightNode = (node, text) => {
     <button class="translate-btn" style="
       background-color: white;
       color: black;
-      padding: 2px 20px; 
-      border-radius: 3px;">
+      padding: 2px 20px !important; 
+      border-radius: 3px !important;">
       Translate
     </button>
   `;
@@ -159,11 +159,11 @@ const highlightNode = (node, text) => {
         justify-content: center;
         align-items: center;
         background-color: #045b42;
-        height: 150px;
-        width: 150px;
+        height: 150px !important;
+        width: 150px !important;
         border: 1px solid black;
         border-radius: 8px;
-        z-index: 1000;
+        z-index: 9999999999999999999999999 !important;
       `;
     }
 
@@ -187,7 +187,7 @@ const highlightNode = (node, text) => {
 };
 
 // Detect untranslated content and highlight it
-const detectUntranslatedContent = async () => {
+const detectUntranslatedContent = async (targetLanguage) => {
   const translations = await new Promise((resolve) => {
     chrome.storage.sync.get("translations", (data) => {
       resolve(data.translations || {});
@@ -200,8 +200,19 @@ const detectUntranslatedContent = async () => {
   textNodes.forEach((node) => {
     const text = node.textContent.trim();
     const sanitizedKey = text.replace(/\./g, "").replace(/\d/g, "");
+    if (
+      !translations[targetLanguage] ||
+      Object.keys(translations[targetLanguage]).length === 0
+    ) {
+      console.log(`No translations found for ${targetLanguage}`);
+      return;
+    }
 
-    if (!translations[sanitizedKey]) {
+    const languageBaseJson = translations[targetLanguage];
+
+    console.log(languageBaseJson);
+
+    if (!languageBaseJson[sanitizedKey]) {
       const highlightedNode = highlightNode(node, text);
       untranslatedTexts.push({ text, element: highlightedNode });
     }
@@ -216,6 +227,7 @@ const detectUntranslatedContent = async () => {
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request) => {
   if (request.action === "detectUntranslated") {
-    detectUntranslatedContent();
+    const targetLanguage = request.language;
+    detectUntranslatedContent(targetLanguage);
   }
 });
