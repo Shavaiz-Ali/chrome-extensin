@@ -1,5 +1,11 @@
+import AuthForm from "./auth-form";
+
 const Login = () => {
-  return <div className="text-white">login</div>;
+  return (
+    <div className="w-full">
+      <AuthForm type={"login"} />
+    </div>
+  );
 };
 
 export default Login;

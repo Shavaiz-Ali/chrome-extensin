@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 export default (env) => {
   // Ensure env is passed correctly
   if (!env) {
-    env = { target: "web" }; // default to web if not specified
+    env = { target: "web" }; // Default to "web" if not specified
   }
 
   const isExtension = env.target === "extension";
@@ -56,10 +56,10 @@ export default (env) => {
 
     resolve: {
       extensions: [".js", ".jsx", ".mjs", ".css"],
-      // alias: {
-      //   "@": path.resolve(__dirname, "src"),
-      //   "@web": path.resolve(__dirname, "src/web"),
-      // },
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+        "@web": path.resolve(__dirname, "src/web"),
+      },
     },
 
     plugins: [
@@ -76,6 +76,7 @@ export default (env) => {
       static: {
         directory: path.resolve(__dirname, "public"),
       },
+      historyApiFallback: true, // Necessary for React Router
       compress: true,
       port: 8080,
       open: true,
